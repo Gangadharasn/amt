@@ -20,23 +20,28 @@ h1, h2, h3 {
 }
 
 form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 24px;
   padding: 20px;
   background: #f8f9fa;
   border-radius: 8px;
+  justify-content: center;
 }
 
-input, select {
+form input, form select {
+  flex: 1 1 150px;
+  min-width: 120px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
 }
 
-button {
+form button {
+  flex: 1 1 150px;
+  min-width: 120px;
   padding: 8px 16px;
   background: #007bff;
   color: #fff;
@@ -45,9 +50,10 @@ button {
   cursor: pointer;
   transition: background 0.2s;
   font-size: 14px;
+  height: 40px;
 }
 
-button:hover {
+form button:hover {
   background: #0056b3;
 }
 
@@ -108,17 +114,52 @@ tr:hover {
   background: #f8f9fa;
 }
 
-@media (max-width: 768px) {
-  .container {
-    margin: 20px;
-    padding: 15px;
-  }
-  
-  form {
-    grid-template-columns: 1fr;
-  }
-  
+.delete-btn {
+  background: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: #d9363e;
+}
+
+@media (max-width: 900px) {
   .charts-container {
     grid-template-columns: 1fr;
+  }
+  .tables-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    margin: 10px;
+    padding: 5px;
+  }
+  form {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+  }
+  form input, form select, form button {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .chart-wrapper {
+    padding: 10px;
+  }
+  .table-section {
+    padding: 10px;
+  }
+  th, td {
+    padding: 8px;
   }
 } 
