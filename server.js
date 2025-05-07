@@ -1,4 +1,29 @@
-// ... existing code ...
+const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+const cors = require('cors');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, 'expenses.json');
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+function readExpenses() {
+  if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, '[]');
+  }
+  const data = fs.readFileSync(DATA_FILE);
+  return JSON.parse(data);
+}
+
+function writeExpenses(expenses) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(expenses, null, 2));
+}
+
 // Add a new expense
 app.post('/api/expenses', (req, res) => {
   const { date, description, amount, category, user } = req.body;
@@ -22,4 +47,13 @@ app.delete('/api/expenses/:idx', (req, res) => {
   writeExpenses(expenses);
   res.json({ success: true });
 });
-// ... existing code ... 
+
+// Get all expenses
+app.get('/api/expenses', (req, res) => {
+  const expenses = readExpenses();
+  res.json(expenses);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+}); 
