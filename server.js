@@ -34,12 +34,12 @@ app.get('/api/expenses', (req, res) => {
 
 // Add a new expense
 app.post('/api/expenses', (req, res) => {
-  const { date, description, amount } = req.body;
-  if (!date || !description || !amount) {
+  const { date, description, amount, category, user } = req.body;
+  if (!date || !description || !amount || !category || !user) {
     return res.status(400).json({ error: 'All fields are required.' });
   }
   const expenses = readExpenses();
-  expenses.push({ date, description, amount });
+  expenses.push({ date, description, amount, category, user });
   writeExpenses(expenses);
   res.json({ success: true });
 });
